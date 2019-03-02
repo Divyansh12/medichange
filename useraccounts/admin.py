@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.apps import apps
 
-app = apps.get_app_config('accountsuser')
+app = apps.get_app_config('useraccounts')
 
 class PersonAdmin(admin.ModelAdmin):
     search_fields = ['room__number','block__name','room']
