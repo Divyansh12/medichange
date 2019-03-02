@@ -11,6 +11,10 @@ urlpatterns = [
     path('api/medicinelocation', MedicineLocationViewSet.as_view()),
     path('api/request',RequestViewSet.as_view()),
     path('api/accept',AcceptViewSet.as_view()),
+    path('api/transaction',Transaction.as_view()),
+    path('api/credittotal',CalculateCreditTotal.as_view()),
+    path('api/creditupdate',DateWiseCreditUpdateViewSet.as_view()),
+    path('api/ocr',MedicineInfoViewSet.as_view()),
 ]
 
 
