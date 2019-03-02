@@ -5,11 +5,11 @@ from useraccounts.models import UserModel,Pharamcy,Organisation
 class CommonModel(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    archived = models.BooleanField(default=False)
-    def delete(self,*args, **kwargs):
-        self.archived = True
-        super().save(self,*args, **kwargs)
-        super().save(*args, **kwargs)
+    # archived = models.BooleanField(default=False)
+    # def delete(self,*args, **kwargs):
+    #     self.archived = True
+    #     super().save(self,*args, **kwargs)
+    #     super().save(*args, **kwargs)
     class Meta:
         abstract = True
 
