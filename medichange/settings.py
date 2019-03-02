@@ -91,6 +91,12 @@ DATABASES = {
         'PASSWORD':'12.divyansh',
         'HOST':'127.0.0.1',
         'PORT':'5432',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'medexdata',
+        # 'USER':'azomicrate',
+        # 'PASSWORD':'postpass',
+        # 'HOST':'127.0.0.1',
+        # 'PORT':'5432',
     }
 }
 
