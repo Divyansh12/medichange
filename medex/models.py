@@ -43,7 +43,7 @@ class MedicineOfUser(CommonModel):
     medicine = models.ForeignKey(Medicine,
                     on_delete=models.CASCADE
                     )
-    creditForMedicine= models.DecimalField(max_digits=6, decimal_places=2)
+    creditForMedicine= models.DecimalField(max_digits=6, decimal_places=2,default=0,null=True,blank=True)
     expiryDate=models.DateField()
     medicinePicture = models.ImageField(upload_to=user_directory_path)
     expiryPicture =models.ImageField(upload_to=get_user_image_folder)

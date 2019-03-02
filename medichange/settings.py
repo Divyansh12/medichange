@@ -26,7 +26,7 @@ SECRET_KEY = 's4!0j6kpihdzzbnh^)vwbwu1(7qwxg%w4rfs*w7gz6=$flmy9x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['206.189.133.177']
 
 AUTH_USER_MODEL = 'useraccounts.UserModel'
 
@@ -171,4 +171,3 @@ try:
 except ImportError:
     pass
 
-    
