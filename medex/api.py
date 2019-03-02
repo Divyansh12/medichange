@@ -94,7 +94,7 @@ class MedicineLocationViewSet(views.APIView):
 	def get(self,request,*args,**kwargs):
 		data={}
 
-		data['medicineLocation']= MedicineOfUser.objects.values('id','medicine__name','medicine__id','creditForMedicine','quantityOfMedicine','expiryDate','pharmacist__username','pharmacist__address','pharmacist__latitude','pharmacist__longitude').filter(isAccepteByPharmacist=True)
+		data['medicineLocation']= MedicineOfUser.objects.values('id','medicine__name','medicine__id','creditForMedicine','quantityOfMedicine','expiryDate','pharmacist__username','pharmacist__address','pharmacist__latitude','pharmacist__longitude').filter(isAcceptedByPharmacist=True)
 
 		return Response(data)
 
@@ -151,7 +151,7 @@ class AcceptViewSet(views.APIView):
         setrequest=False
 
         print(req.get("id"))
-        updated = MedicineOfUser.objects.filter(pharmacist=self.request.user.id,isRequested=True,id=req.get("id")).update(isRequested=setrequest,isAccepteByPharmacist=req.get("isAccepteByPharmacist")),
+        updated = MedicineOfUser.objects.filter(pharmacist=self.request.user.id,isRequested=True,id=req.get("id")).update(isRequested=setrequest,isAcceptedByPharmacist=req.get("isAcceptedByPharmacist")),
         return Response({ 
             "details":MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','pharmacist').filter(pharmacist=self.request.user.id,isRequested=True),
             })
@@ -196,8 +196,8 @@ class CalculateCreditTotal(views.APIView):
     def get(self,request,*args,**kwargs):
         Users = UserModel.objects.all()
         
-        for participate in MedicineOfUser.objects.values('user__id').annotate(sum=Sum('creditForMedicine')).filter(isAccepteByPharmacist=True):
-            newTotal,updated = UserModel.objects.update(user_id=participate['user__id'],defaults={'totalCredits': participate['sum']})
+        for participate in MedicineOfUser.objects.values('user__id').annotate(sum=Sum('creditForMedicine')).filter(isAcceptedByPharmacist=True):
+            updated = UserModel.objects.filter(id=participate['user__id']).update(totalCredits=participate['sum'])
         return Response({"msg":"It Works"}) 
 
 class Transaction(views.APIView):
@@ -214,7 +214,7 @@ class Transaction(views.APIView):
 
         data={"data":Pharamcy.objects.all().filter(email=self.request.user) }
 
-        medicines = MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','user','pharmacist','isAccepteByPharmacist').filter(pharmacist=self.request.user.id,isRequested=True)
+        medicines = MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','user','pharmacist','isAccepteByPharmacist').filter(pharmacist=self.request.user.id,isAcceptedByPharmacist=True)
 
         for meds in medicines:
             if meds.isAcceptedByPharmacist==True:
@@ -224,3 +224,84 @@ class Transaction(views.APIView):
                 meds.user.save()
                 meds.pharmacist.save()
                 meds.save()
+
+        Response({"detail":"transaction completed"})
+
+class DateWiseCreditUpdateViewSet(views.APIView):
+    def get(self,request,*args, **kwargs):
+
+        for medicines in MedicineOfUser.objects.all():
+            diff=datetime.datetime.now().date()-medicines.expiryDate
+            # datetime.datetime.now().date()-
+            
+            if(diff.days==15):
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.5
+                
+
+            elif(diff.days==30):
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.35
+
+            elif(diff.days==60):
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.20
+
+            elif(diff.days==90):
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.10
+
+            updated = MedicineOfUser.objects.filter(id=medicines.id).update(creditForMedicine=credit)
+            
+
+
+
+
+
+            print(diff.days)
+        return Response({"completed":"True"})
+
+class MedicineInfoViewSet(views.APIView):
+
+    parser_classes = (MultiPartParser, FormParser,)
+    def get(self,request,*args, **kwargs):
+
+        os.system("set GOOGLE_APPLICATION_CREDENTIALS='C:/Users/Azomicrate/Documents/Desktop2/VsCode/Django/apiauthpreview/test.json'")
+
+        req=request.POST
+        client = vision.ImageAnnotatorClient()
+        file_name = os.path.join(
+            os.path.dirname(__file__),
+            req.get("img"))
+
+        with io.open(file_name,'rb') as image_file:
+            content= image_file.read()
+
+        image = types.Image(content=content)
+
+        words={}
+
+        response = client.document_text_detection(image=image)
+        # labels = response.full_text_annotation.blocks
+        # print("Labels:")
+        for page in response.full_text_annotation.pages:
+
+            # if page.confidence>0.05:
+                for block in page.blocks:
+                    print('\nBlock confidence: {}\n'.format(block.confidence))
+
+                    for paragraph in block.paragraphs:
+                        print('Paragraph confidence: {}'.format(
+                            paragraph.confidence))
+
+
+                        for word in paragraph.words:
+
+                            words["text"] = ''.join([
+                                symbol.text for symbol in word.symbols
+                            ])
+                            # if word_text=="EXP" or word_text=="exp" or 
+                            print(words["text"])
+        
+
+        return Response(words)
+
+                        
+
+                
