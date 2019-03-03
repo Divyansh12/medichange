@@ -68,7 +68,7 @@ class MedicineOfUserViewSet(viewsets.ModelViewSet):
     permission_classes=[
         permissions.IsAuthenticated
     ]
-
+    serializer_class = MedicineOfUserSerializer
     def get_queryset(self):
         return self.request.user.medicineOfUser.all()
     def perform_create(self,serializer):
