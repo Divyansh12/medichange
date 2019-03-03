@@ -8,9 +8,23 @@ from django.db.models import Count,Avg,Sum
 from rest_framework.response import Response
 from rest_framework import viewsets,permissions,filters,views
 from rest_framework.parsers import JSONParser, MultiPartParser,FormParser
-from useraccounts.serializers import PharmacistSerializer
-from useraccounts.models import UserModel,Pharamcy,Organisation
+from accountsuser.serializers import PharmacistSerializer
+from accountsuser.models import UserModel,Pharamcy,Organisation
 from django.http import Http404
+import io
+from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import Storage
+from django.core.files.base import ContentFile
+from django.shortcuts import render
+import io
+import os
+from google.cloud import vision
+from google.cloud.vision import types
+
+import datetime
+from PIL import Image
+import pytesseract
+
 
 class CommenViewSet(viewsets.ModelViewSet):
 	permission_classes  = (permissions.AllowAny,)
