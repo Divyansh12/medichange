@@ -20,9 +20,10 @@ class UserModel(AbstractUser):
 
 
 class Pharamcy(UserModel):
-    latitude=models.CharField(max_length=10000)
-    longitude=models.CharField(max_length=10000)
-    licenseOfPharmacist=models.FileField(upload_to='pharmacistlicense/')
+    latitude=models.CharField(max_length=10000,blank=True,null=True)
+    longitude=models.CharField(max_length=10000,blank=True,null=True)
+    licenseOfPharmacist=models.FileField(upload_to='pharmacistlicense/',blank=True,null=True)
+    licenseNumber = models.CharField(max_length=15,default=0)
     
     def __str__(self):
         return self.email
@@ -30,9 +31,11 @@ class Pharamcy(UserModel):
 
 
 class Organisation(UserModel):
-    latitude=models.CharField(max_length=10000)
-    longitude=models.CharField(max_length=10000)
-    licenseOfOrganisation=models.FileField(upload_to='organisationlicense/')
+    latitude=models.CharField(max_length=10000,blank=True,null=True)
+    longitude=models.CharField(max_length=10000,blank=True,null=True)
+    licenseOfOrganisation=models.FileField(upload_to='organisationlicense/',blank=True,null=True)
+    licenseNumber = models.CharField(max_length=15,default=0)
+
     # isHospital=models.BooleanField()
     
     

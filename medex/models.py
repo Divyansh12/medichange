@@ -45,8 +45,8 @@ class MedicineOfUser(CommonModel):
                     )
     creditForMedicine= models.DecimalField(max_digits=6, decimal_places=2,default=0,null=True,blank=True)
     expiryDate=models.DateField()
-    medicinePicture = models.ImageField(upload_to=user_directory_path)
-    expiryPicture =models.ImageField(upload_to=get_user_image_folder)
+    medicinePicture = models.ImageField(upload_to=user_directory_path,blank=True)
+    expiryPicture =models.ImageField(upload_to=get_user_image_folder,blank=True)
     quantityOfMedicine = models.IntegerField()
     pharmacist=models.ForeignKey(
         Pharamcy,
@@ -80,3 +80,9 @@ class MedicineOfUser(CommonModel):
 #                     MedicineOfUser, 
 #                     on_delete=models.CASCADE
 #                     )
+
+
+class RequestedMedicines(CommonModel):
+    requests = models.CharField(max_length=20)
+    details = models.CharField(max_length=50)
+    isAccepted= models.BooleanField(default=False)

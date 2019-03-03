@@ -20,3 +20,8 @@ class MedicineLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model=MedicineOfUser
         fields=('id','creditForMedicine','quantityOfMedicine','expiryDate','pharmacist')
+
+class AddMedicineRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequestedMedicines
+        fields = ('id','request','details')

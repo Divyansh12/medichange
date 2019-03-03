@@ -5,6 +5,7 @@ from django.urls import path,include
 router = routers.DefaultRouter()
 router.register(r'api/medicinelist',MedicineViewSet,'medicines')
 router.register(r'api/medicineofuser', MedicineOfUserViewSet, 'medicineOfUser')
+router.register(r'api/requestamedicine', AddMedicineRequestViewSet, 'medicineOfUser')
 
 
 urlpatterns = [
