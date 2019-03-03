@@ -63,14 +63,14 @@ class MedicineOfUser(CommonModel):
         if not self.id:
             self.creditForMedicine = self.quantityOfMedicine * self.medicine.pricePerTablet
 
-        if self.pharmacist is not None :
-            self.user.totalCredits = self.user.totalCredits + self.creditForMedicine
-            self.user.save()
-        if self.isAccepteByPharmacist == True:
-            self.user.totalCredits = self.user.totalCredits - self.creditForMedicine
-            self.pharmacist.totalCredits =self.pharmacist.totalCredits + self.creditForMedicine
-            self.user.save()
-            self.pharmacist.save()
+        # if self.pharmacist is not None :
+        #     self.user.totalCredits = self.user.totalCredits + self.creditForMedicine
+        #     self.user.save()
+        # if self.isAccepteByPharmacist == True:
+        #     self.user.totalCredits = self.user.totalCredits - self.creditForMedicine
+        #     self.pharmacist.totalCredits =self.pharmacist.totalCredits + self.creditForMedicine
+        #     self.user.save()
+        #     self.pharmacist.save()
             #self.username=self.user.user
         super().save(*args,**kwargs)
 
