@@ -73,7 +73,7 @@ class PharmacistLoginAPI(generics.GenericAPIView):
         if data['data'] :
             return Response({
             # "user": UserSerializer(user,context=self.get_serializer_context()).data,
-                "pharmacist": Pharamcy.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist').filter(email=user),
+                "pharmacist": Pharamcy.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','licenseNumber').filter(email=user),
                 "token": AuthToken.objects.create(user)
             })
            
@@ -103,7 +103,7 @@ class PharmacistAPI(generics.RetrieveAPIView):
         print(data)
         if data['data'] :
             return Response({
-            "pharmacist": Pharamcy.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist').filter(email=self.request.user),
+            "pharmacist": Pharamcy.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','licenseNumber').filter(email=self.request.user),
         }) 
         
 
@@ -144,7 +144,7 @@ class OrganisationLoginAPI(generics.GenericAPIView):
 
             return Response({
             # "user": UserSerializer(user,context=self.get_serializer_context()).data,
-                "Organisation": Organisation.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation').filter(email=user),
+                "Organisation": Organisation.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation','licenseNumber').filter(email=user),
                 "token": AuthToken.objects.create(user)
             })
             
@@ -171,7 +171,7 @@ class OrganisationAPI(generics.RetrieveAPIView):
         data={"data":Organisation.objects.all().filter(email=self.request.user) }
         if data['data'] :
             return Response({
-                "organisation": Organisation.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation').filter(email=self.request.user),
+                "organisation": Organisation.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation','licenseNumber').filter(email=self.request.user),
             }) 
            
         else:   

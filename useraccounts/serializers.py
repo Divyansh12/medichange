@@ -37,19 +37,19 @@ class LoginSerializer(serializers.Serializer):
 class PharmacistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pharamcy
-        fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfPharmacist')
+        fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfPharmacist','licenseNumber')
         
-        read_only_fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfPharmacist')
+        read_only_fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfPharmacist','licenseNumber')
         # fields = '__all__'
 
 class PharmacistRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pharamcy
-        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','password')
+        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','licenseNumber','password')
         extra_kwargs={'password':{'write_only':True}}
 
     def create(self,validated_data):
-        user = Pharamcy.objects.create_user(username=validated_data['username'],email=validated_data['email'],password=validated_data['password'],phoneNumber=validated_data['phoneNumber'],address=validated_data['address'],aadhaarNo=validated_data['aadhaarNo'],latitude=validated_data['latitude'],longitude=validated_data['longitude'],licenseOfPharmacist=validated_data['licenseOfPharmacist'])
+        user = Pharamcy.objects.create_user(username=validated_data['username'],email=validated_data['email'],password=validated_data['password'],phoneNumber=validated_data['phoneNumber'],address=validated_data['address'],aadhaarNo=validated_data['aadhaarNo'],latitude=validated_data['latitude'],longitude=validated_data['longitude'],licenseOfPharmacist=validated_data['licenseOfPharmacist'],licenseNumber=validated_data['licenseNumber'])
 
         return user
 
@@ -68,7 +68,7 @@ class PharmacistLoginSerializer(serializers.Serializer):
 class OrganisationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organisation
-        fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfOrganisation')
+        fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfOrganisation','licenseNumber')
         
         # read_only_fields = ('id','username','email','phoneNumber','aadhaarNo','totalCredits','address','latitude','longitude','licenseOfOrganisation')
         # fields = '__all__'
@@ -76,11 +76,11 @@ class OrganisationSerializer(serializers.ModelSerializer):
 class OrganisationRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organisation
-        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation','password')
+        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfOrganisation','password','licenseNumber')
         extra_kwargs={'password':{'write_only':True}}
 
     def create(self,validated_data):
-        user = Organisation.objects.create_user(username=validated_data['username'],email=validated_data['email'],password=validated_data['password'],phoneNumber=validated_data['phoneNumber'],address=validated_data['address'],aadhaarNo=validated_data['aadhaarNo'],latitude=validated_data['latitude'],longitude=validated_data['longitude'],licenseOfOrganisation=validated_data['licenseOfOrganisation'])
+        user = Organisation.objects.create_user(username=validated_data['username'],email=validated_data['email'],password=validated_data['password'],phoneNumber=validated_data['phoneNumber'],address=validated_data['address'],aadhaarNo=validated_data['aadhaarNo'],latitude=validated_data['latitude'],longitude=validated_data['longitude'],licenseOfOrganisation=validated_data['licenseOfOrganisation'],licenseNumber=validated_data['licenseNumber'])
 
         return user
 
