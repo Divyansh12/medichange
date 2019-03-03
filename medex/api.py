@@ -126,7 +126,7 @@ class RequestViewSet(views.APIView):
         print(data)
         if data['data'] :
             return Response({
-            "request": MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','pharmacist').filter(pharmacist=self.request.user.id,isRequested=True),
+            "req": MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','pharmacist').filter(pharmacist=self.request.user.id,isRequested=True),
         }) 
         
 
