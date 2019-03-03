@@ -228,18 +228,20 @@ class Transaction(views.APIView):
 
         data={"data":Pharamcy.objects.all().filter(email=self.request.user) }
 
-        medicines = MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','user','pharmacist','isAccepteByPharmacist').filter(pharmacist=self.request.user.id,isAcceptedByPharmacist=True)
+        medicines = MedicineOfUser.objects.values('id','creditForMedicine','medicine__name','quantityOfMedicine','expiryDate','medicinePicture','expiryPicture','user','user__totalCredits','pharmacist','pharmacist__totalCredits','isAcceptedByPharmacist').filter(pharmacist=self.request.user.id,isAcceptedByPharmacist=True)
 
         for meds in medicines:
-            if meds.isAcceptedByPharmacist==True:
-                meds.user.totalCredit = meds.user.totalCredit + meds.creditForMedicine
-                meds.pharmacist.totalCredit = meds.pharmacist.totalCredit - meds.creditForMedine
-                meds.isRequested = False
-                meds.user.save()
-                meds.pharmacist.save()
-                meds.save()
+            if meds['isAcceptedByPharmacist']==True:
+                meds['user__totalCredits'] = meds['user__totalCredits'] + meds['creditForMedicine']
+                meds['pharmacist__totalCredits'] = meds['pharmacist__totalCredits'] - meds['creditForMedicine']
+                updateuser=UserModel.objects.filter(id=meds['user']).update(totalCredits=meds['user__totalCredits'])
+                updatePharma=Pharamcy.objects.filter(id=meds['pharmacist']).update(totalCredits=meds['pharmacist__totalCredits'])
+                update=MedicineOfUser.objects.filter(id=meds['id']).update(isRequested = False)
+                print(update)
 
-        Response({"detail":"transaction completed"})
+
+
+        return Response({"detail":"transaction completed"})
 
 class DateWiseCreditUpdateViewSet(views.APIView):
     def get(self,request,*args, **kwargs):
@@ -261,7 +263,7 @@ class DateWiseCreditUpdateViewSet(views.APIView):
             elif(diff.days<=90):
                 credit = medicines.creditForMedicine - medicines.creditForMedicine*0.10
 
-            updated = MedicineOfUser.objects.filter(id=medicines.id).update(creditForMedicine=credit)
+            updated = MedicineOfUser.objects.filter(id=medicines.id).update(creditForMedicine=Decimal(credit))
             
 
 

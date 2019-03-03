@@ -1,4 +1,4 @@
-from rest_framework import generics,permissions
+from rest_framework import generics,permissions,views
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import *
@@ -82,7 +82,15 @@ class PharmacistLoginAPI(generics.GenericAPIView):
                 "details":"Invaid Credentials"
             })
 
-           
+class PharmacistListAPI(views.APIView): 
+    serializer_class = PharmacistSerializer
+
+    def get(self,request,*args, **kwargs):
+
+        return Response({
+            "pharmacists": Pharamcy.objects.values('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','licenseNumber').all()
+        })
+
 
 
 

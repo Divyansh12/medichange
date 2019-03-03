@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/auth/organisation/register',OrganisationRegisterAPI.as_view()),
     path('api/auth/organisation/login',OrganisationLoginAPI.as_view()),
     path('api/auth/organisation',OrganisationAPI.as_view()),
+    path('api/pharmacistlist',PharmacistListAPI.as_view())
 ]
