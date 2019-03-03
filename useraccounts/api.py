@@ -30,7 +30,7 @@ class LoginAPI(generics.GenericAPIView):
             "user":UserSerializer(user,context=self.get_serializer_context()).data,
             "token":AuthToken.objects.create(user)
         })
-        
+
 
 
 #Get User Api
@@ -47,7 +47,6 @@ class UserAPI(generics.RetrieveAPIView):
 #Register API
 class PharmacistRegisterAPI(generics.GenericAPIView):
     serializer_class= PharmacistRegisterSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
     def post(self,request,*args, **kwargs):
         serializer= self.get_serializer(data=request.data)
@@ -102,7 +101,6 @@ class PharmacistAPI(generics.RetrieveAPIView):
     ]
     
     serializer_class = PharmacistSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
 
     def get(self,request,*args, **kwargs):
@@ -173,7 +171,6 @@ class OrganisationAPI(generics.RetrieveAPIView):
     ]
     
     serializer_class = OrganisationSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
     def get(self,request,*args, **kwargs):
         print(self.request.user)
