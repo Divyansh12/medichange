@@ -83,6 +83,6 @@ class MedicineOfUser(CommonModel):
 
 
 class RequestedMedicines(CommonModel):
-    requests = models.CharField(max_length=20)
+    medicineRequested = models.CharField(max_length=20)
     details = models.CharField(max_length=50)
     isAccepted= models.BooleanField(default=False)

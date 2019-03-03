@@ -24,4 +24,4 @@ class MedicineLocationSerializer(serializers.ModelSerializer):
 class AddMedicineRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestedMedicines
-        fields = ('id','request','details')
+        fields = ('id','medicineRequested','details')
