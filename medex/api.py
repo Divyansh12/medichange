@@ -245,18 +245,21 @@ class DateWiseCreditUpdateViewSet(views.APIView):
             diff=datetime.datetime.now().date()-medicines.expiryDate
             # datetime.datetime.now().date()-
             
+            
             if(diff.days<=15):
-                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.5
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*Decimal(0.5)
                 
 
             elif(diff.days<=30):
-                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.35
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*Decimal(0.35)
 
             elif(diff.days<=60):
-                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.20
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*Decimal(0.20)
 
             elif(diff.days<=90):
-                credit = medicines.creditForMedicine - medicines.creditForMedicine*0.10
+                credit = medicines.creditForMedicine - medicines.creditForMedicine*Decimal(0.10)
+
+            print(credit)
 
             updated = MedicineOfUser.objects.filter(id=medicines.id).update(creditForMedicine=Decimal(credit))
             
