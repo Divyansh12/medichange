@@ -69,7 +69,6 @@ class MedicineOfUserViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated
     ]
     parser_classes = (MultiPartParser, FormParser,)
-    serializer_class = MedicineOfUserSerializer
 
     def get_queryset(self):
         return self.request.user.medicineOfUser.all()
@@ -118,7 +117,6 @@ class RequestViewSet(views.APIView):
     ]
     
     serializer_class = PharmacistSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
 
     def get(self,request,*args, **kwargs):
@@ -155,7 +153,6 @@ class AcceptViewSet(views.APIView):
     ]
     
     serializer_class = PharmacistSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
     def patch(self,request,*args,**kwargs):
         print(self.request.user)
@@ -220,7 +217,6 @@ class Transaction(views.APIView):
     ]
     
     serializer_class = PharmacistSerializer
-    parser_classes = (MultiPartParser, FormParser,)
 
 
     def get(self,request,*args, **kwargs):
@@ -275,7 +271,6 @@ class DateWiseCreditUpdateViewSet(views.APIView):
 
 class MedicineInfoViewSet(views.APIView):
 
-    parser_classes = (MultiPartParser, FormParser,)
     def get(self,request,*args, **kwargs):
 
         os.system("set GOOGLE_APPLICATION_CREDENTIALS='C:/Users/Azomicrate/Documents/Desktop2/VsCode/Django/apiauthpreview/test.json'")
