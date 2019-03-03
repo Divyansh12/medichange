@@ -68,7 +68,6 @@ class MedicineOfUserViewSet(viewsets.ModelViewSet):
     permission_classes=[
         permissions.IsAuthenticated
     ]
-    parser_classes = (MultiPartParser, FormParser,)
 
     def get_queryset(self):
         return self.request.user.medicineOfUser.all()
