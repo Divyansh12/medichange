@@ -45,7 +45,7 @@ class PharmacistSerializer(serializers.ModelSerializer):
 class PharmacistRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pharamcy
-        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseOfPharmacist','licenseNumber','password')
+        fields = ('id','username','email','phoneNumber','aadhaarNo','address','latitude','longitude','licenseNumber','password')
         extra_kwargs={'password':{'write_only':True}}
 
     def create(self,validated_data):
